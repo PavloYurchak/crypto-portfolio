@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Context\" />
+		<Folder Include="Entities\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
+		<PackageReference Include="Scrutor" Version="6.1.0" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Domain\CryptoPorfolio.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

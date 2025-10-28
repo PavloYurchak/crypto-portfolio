@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "CryptoPorfolio",
+      "documentExposedElements": false,
+      "documentInternalElements": false,
+      "documentPrivateElements": false
+    },
+    "orderingRules": {
+      "systemUsingDirectivesFirst": true,
+      "usingDirectivesPlacement": "outsideNamespace",
+      "blankLinesBetweenUsingGroups": "omit"
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    },
+    "namingRules": {
+      "allowCommonHungarianPrefixes": true
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": [
+        "class",
+        "struct",
+        "interface",
+        "enum"
+      ]
+    }
+  }
+}
