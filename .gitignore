@@ -416,3 +416,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+backend/CryptoPortfolio/CryptoPorfolio.API/appsettings.json
+/backend/CryptoPortfolio/CryptoPorfolio.API/appsettings.Development.json
