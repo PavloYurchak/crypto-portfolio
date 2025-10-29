@@ -3,6 +3,7 @@
 // </copyright>
 
 using CryptoPorfolio.Domain.Repositories;
+using CryptoPorfolio.Infrastructure.Abstraction;
 using CryptoPorfolio.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +37,8 @@ namespace CryptoPorfolio.Infrastructure
                         break;
                 }
             });
+
+            services.AddScoped<IDatabaseInitializer, DatabaseInitializer<CryptoPorfolioContext>>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 

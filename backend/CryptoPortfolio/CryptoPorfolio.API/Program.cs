@@ -4,7 +4,9 @@
 
 using CryptoPorfolio.Application;
 using CryptoPorfolio.Infrastructure;
+using CryptoPorfolio.Infrastructure.Abstraction;
 using Microsoft.OpenApi.Models;
+using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,4 +42,17 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.MapControllers();
 
+await InitializeDatabase(app);
+
 app.Run();
+static async Task InitializeDatabase(WebApplication app, CancellationToken cancellationToken = default(CancellationToken))
+{
+    using IServiceScope scope = app.Services.CreateScope();
+    IDatabaseInitializer service = scope.ServiceProvider.GetRequiredService<IDatabaseInitializer>();
+    if (service != null)
+    {
+        await service.InitializeAndSeed(cancellationToken);
+    }
+
+    scope.Dispose();
+}
