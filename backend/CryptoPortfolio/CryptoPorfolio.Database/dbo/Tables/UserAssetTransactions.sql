@@ -22,7 +22,8 @@
 	CONSTRAINT [FK_UserAssetTransactions_UserAssets_Id] FOREIGN KEY ([UserAssetId]) REFERENCES [dbo].[UserAssets]([Id]),
 	CONSTRAINT [FK_UserAssetTransactions_Assets_Id] FOREIGN KEY ([AssetId]) REFERENCES [dbo].[Assets]([Id]),
 	CONSTRAINT [FK_UserAssetTransactions_Currencies_Id] FOREIGN KEY ([CurrencyId]) REFERENCES [dbo].[Currencies]([Id]),
-	CONSTRAINT [FK_UserAssetTransactions_TransactionTypes_Id] FOREIGN KEY ([TypeId]) REFERENCES [dbo].[TransactionTypes]([Id])
+	CONSTRAINT [FK_UserAssetTransactions_TransactionTypes_Id] FOREIGN KEY ([TypeId]) REFERENCES [dbo].[TransactionTypes]([Id]),
+	CONSTRAINT [FK_UserAssetTransactions_Users_Id] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id])
 );
 
 GO

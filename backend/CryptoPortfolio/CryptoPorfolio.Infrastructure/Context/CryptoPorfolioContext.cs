@@ -14,17 +14,125 @@ public partial class CryptoPorfolioContext : DbContext
     {
     }
 
-    public virtual DbSet<Test> Tests { get; set; }
+    public virtual DbSet<Asset> Assets { get; set; }
+
+    public virtual DbSet<Currency> Currencies { get; set; }
+
+    public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserAsset> UserAssets { get; set; }
+
+    public virtual DbSet<UserAssetTransaction> UserAssetTransactions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Test>(entity =>
+        modelBuilder.Entity<Asset>(entity =>
         {
-            entity.ToTable("Test");
+            entity.HasIndex(e => e.Symbol, "IXU_Assets_Symbol")
+                .IsUnique()
+                .HasFilter("[DeletedAt] IS NULL");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Symbol).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<Currency>(entity =>
+        {
+            entity.HasIndex(e => e.Symbol, "IXU_Currencies_Symbol")
+                .IsUnique()
+                .HasFilter("[DeletedAt] IS NULL");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.Symbol).HasMaxLength(10);
+        });
+
+        modelBuilder.Entity<TransactionType>(entity =>
+        {
+            entity.HasIndex(e => e.Code, "IXU_TransactionTypes_Code")
+                .IsUnique()
+                .HasFilter("[DeletedAt] IS NULL");
+
+            entity.Property(e => e.Code).HasMaxLength(50);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasIndex(e => e.Email, "IXU_Users_Email")
+                .IsUnique()
+                .HasFilter("[DeletedAt] IS NULL");
+
+            entity.HasIndex(e => e.UserName, "IXU_Users_UserName")
+                .IsUnique()
+                .HasFilter("[DeletedAt] IS NULL");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.Email).HasMaxLength(256);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.PasswordAlgo).HasMaxLength(50);
+            entity.Property(e => e.PasswordHash).HasMaxLength(512);
+            entity.Property(e => e.PasswordSalt).HasMaxLength(512);
+            entity.Property(e => e.TwoFactorSecretKey).HasMaxLength(256);
+            entity.Property(e => e.UserName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<UserAsset>(entity =>
+        {
+            entity.HasIndex(e => new { e.UserId, e.AssetId }, "IXU_UserAssets_UserId_AssetId")
+                .IsUnique()
+                .HasFilter("[DeletedAt] IS NULL");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.Quantity).HasColumnType("decimal(38, 18)");
+
+            entity.HasOne(d => d.Asset).WithMany(p => p.UserAssets)
+                .HasForeignKey(d => d.AssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserAssets_Assets_Id");
+        });
+
+        modelBuilder.Entity<UserAssetTransaction>(entity =>
+        {
+            entity.HasIndex(e => new { e.UserId, e.ExecutedAt }, "IX_UserAssetTransactions_UserId_ExecutedAt").HasFilter("DeletedAt IS NULL");
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(38, 18)");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.Price).HasColumnType("decimal(38, 18)");
+            entity.Property(e => e.Quantity).HasColumnType("decimal(38, 18)");
+
+            entity.HasOne(d => d.Asset).WithMany(p => p.UserAssetTransactions)
+                .HasForeignKey(d => d.AssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserAssetTransactions_Assets_Id");
+
+            entity.HasOne(d => d.Currency).WithMany(p => p.UserAssetTransactions)
+                .HasForeignKey(d => d.CurrencyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserAssetTransactions_Currencies_Id");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.UserAssetTransactions)
+                .HasForeignKey(d => d.TypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserAssetTransactions_TransactionTypes_Id");
+
+            entity.HasOne(d => d.UserAsset).WithMany(p => p.UserAssetTransactions)
+                .HasForeignKey(d => d.UserAssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserAssetTransactions_UserAssets_Id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserAssetTransactions)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserAssetTransactions_Users_Id");
         });
 
         OnModelCreatingPartial(modelBuilder);

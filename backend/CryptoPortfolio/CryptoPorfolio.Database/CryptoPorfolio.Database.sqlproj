@@ -60,7 +60,6 @@
     <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Test.sql" />
     <Build Include="dbo\Tables\Currencies.sql" />
     <Build Include="dbo\Tables\Assets.sql" />
     <Build Include="dbo\Tables\UserAssets.sql" />
