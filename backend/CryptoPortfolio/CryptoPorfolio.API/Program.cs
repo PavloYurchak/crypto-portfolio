@@ -6,7 +6,6 @@ using CryptoPorfolio.Application;
 using CryptoPorfolio.Infrastructure;
 using CryptoPorfolio.Infrastructure.Abstraction;
 using Microsoft.OpenApi.Models;
-using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 

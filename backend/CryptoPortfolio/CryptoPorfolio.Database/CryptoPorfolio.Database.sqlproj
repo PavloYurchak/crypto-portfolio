@@ -61,5 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Test.sql" />
+    <Build Include="dbo\Tables\Currencies.sql" />
+    <Build Include="dbo\Tables\Assets.sql" />
+    <Build Include="dbo\Tables\UserAssets.sql" />
+    <Build Include="dbo\Tables\UserAssetTransactions.sql" />
+    <Build Include="dbo\Tables\TransactionTypes.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
   </ItemGroup>
 </Project>
