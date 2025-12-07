@@ -2,9 +2,11 @@
 // Copyright (c) CryptoPorfolio. All rights reserved.
 // </copyright>
 
+using CryptoPorfolio.Application.Abstractions.Security;
 using CryptoPorfolio.Domain.Repositories;
 using CryptoPorfolio.Infrastructure.Abstraction;
 using CryptoPorfolio.Infrastructure.Context;
+using CryptoPorfolio.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +49,9 @@ namespace CryptoPorfolio.Infrastructure
                 .AddClasses(c => c.AssignableTo(typeof(IDomainRepository)))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime());
+
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
 
             return services;
         }

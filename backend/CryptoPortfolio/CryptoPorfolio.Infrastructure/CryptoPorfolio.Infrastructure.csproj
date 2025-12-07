@@ -22,6 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Application\CryptoPorfolio.Application.csproj" />
 	  <ProjectReference Include="..\Domain\CryptoPorfolio.Domain.csproj" />
 	</ItemGroup>
 

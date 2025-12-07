@@ -20,6 +20,11 @@ namespace CryptoPorfolio.Infrastructure.Mapping
                 LockoutEndAt = entity.LockoutEndAt,
                 FailedAccessCount = entity.FailedAccessCount,
                 TwoFactorEnabled = entity.TwoFactorEnabled,
+                PasswordAlgo = entity.PasswordAlgo,
+                PasswordHash = entity.PasswordHash,
+                PasswordSalt = entity.PasswordSalt,
+                TwoFactorBackupCodes = entity.TwoFactorBackupCodes,
+                TwoFactorSecretKey = entity.TwoFactorSecretKey,
                 CreatedAt = entity.CreatedAt,
                 UpdatedAt = entity.UpdatedAt,
                 IsActive = entity.IsActive,
@@ -37,6 +42,10 @@ namespace CryptoPorfolio.Infrastructure.Mapping
                 LockoutEndAt = model.LockoutEndAt,
                 FailedAccessCount = model.FailedAccessCount,
                 TwoFactorEnabled = model.TwoFactorEnabled,
+                PasswordAlgo = model.PasswordAlgo,
+                PasswordSalt = model.PasswordSalt,
+                TwoFactorBackupCodes = model.TwoFactorBackupCodes,
+                PasswordHash = model.PasswordHash,
                 IsActive = model.IsActive,
             };
         }

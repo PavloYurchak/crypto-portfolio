@@ -34,7 +34,7 @@ namespace CryptoPorfolio.Domain.Repositories
         /// <param name="model">The user asset model to upsert.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>The upserted user asset.</returns>
-        Task<UserAsset> Create(UserAsset model, CancellationToken cancellationToken = default);
+        Task<UserAsset?> Create(UserAsset model, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a user asset.
@@ -42,6 +42,6 @@ namespace CryptoPorfolio.Domain.Repositories
         /// <param name="model">The user asset model to update.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>The updated user asset.</returns>
-        Task<UserAsset> Update(UserAsset model, CancellationToken cancellationToken = default);
+        Task<UserAsset?> Update(UserAsset model, CancellationToken cancellationToken = default);
     }
 }

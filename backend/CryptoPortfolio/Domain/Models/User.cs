@@ -12,6 +12,12 @@ namespace CryptoPorfolio.Domain.Models
 
         public required string UserName { get; set; }
 
+        public required string PasswordHash { get; set; }
+
+        public string? PasswordSalt { get; set; }
+
+        public string? PasswordAlgo { get; set; }
+
         public bool EmailConfirmed { get; set; }
 
         public bool IsLockedOut { get; set; }
@@ -21,5 +27,9 @@ namespace CryptoPorfolio.Domain.Models
         public int FailedAccessCount { get; set; }
 
         public bool TwoFactorEnabled { get; set; }
+
+        public string? TwoFactorSecretKey { get; set; }
+
+        public string? TwoFactorBackupCodes { get; set; }
     }
 }

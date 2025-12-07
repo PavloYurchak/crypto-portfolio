@@ -66,5 +66,6 @@
     <Build Include="dbo\Tables\UserAssetTransactions.sql" />
     <Build Include="dbo\Tables\TransactionTypes.sql" />
     <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\UserRefreshTokens.sql" />
   </ItemGroup>
 </Project>

@@ -26,6 +26,8 @@ public partial class CryptoPorfolioContext : DbContext
 
     public virtual DbSet<UserAssetTransaction> UserAssetTransactions { get; set; }
 
+    public virtual DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Asset>(entity =>
@@ -133,6 +135,20 @@ public partial class CryptoPorfolioContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserAssetTransactions_Users_Id");
+        });
+
+        modelBuilder.Entity<UserRefreshToken>(entity =>
+        {
+            entity.HasIndex(e => e.Token, "IX_UserRefreshTokens_Token");
+
+            entity.HasIndex(e => e.UserId, "IX_UserRefreshTokens_UserId");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.ReasonRevoked).HasMaxLength(250);
+            entity.Property(e => e.Token).HasMaxLength(500);
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserRefreshTokens).HasForeignKey(d => d.UserId);
         });
 
         OnModelCreatingPartial(modelBuilder);

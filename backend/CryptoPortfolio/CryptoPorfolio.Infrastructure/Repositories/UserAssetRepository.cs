@@ -44,7 +44,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
             return entity?.ToModel();
         }
 
-        public async Task<UserAsset> Create(UserAsset model, CancellationToken cancellationToken = default)
+        public async Task<UserAsset?> Create(UserAsset model, CancellationToken cancellationToken = default)
         {
             var entity = model.ToEntity();
             entity.CreatedAt = DateTime.UtcNow;
@@ -59,7 +59,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
             return entity.ToModel();
         }
 
-        public async Task<UserAsset> Update(UserAsset model, CancellationToken cancellationToken = default)
+        public async Task<UserAsset?> Update(UserAsset model, CancellationToken cancellationToken = default)
         {
             var entity = await context.UserAssets
                 .SingleOrDefaultAsync(
@@ -78,11 +78,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                 await context.SaveChangesAsync(cancellationToken);
             }
 
-            entity = await context.UserAssets
-                .Include(e => e.Asset)
-                .SingleAsync(e => e.Id == entity.Id, cancellationToken);
-
-            return entity.ToModel();
+            return entity?.ToModel();
         }
     }
 }

@@ -35,6 +35,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserRefreshTokens]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Users]",
          "ObjectType": 0
       }

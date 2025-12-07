@@ -44,4 +44,6 @@ public partial class User
     public bool IsActive { get; set; }
 
     public virtual ICollection<UserAssetTransaction> UserAssetTransactions { get; set; } = new List<UserAssetTransaction>();
+
+    public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; } = new List<UserRefreshToken>();
 }
