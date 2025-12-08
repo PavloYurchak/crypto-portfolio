@@ -43,8 +43,11 @@ namespace CryptoPorfolio.Infrastructure
 
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer<CryptoPorfolioContext>>();
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
+            services.Scan(scan => scan
+                .FromAssemblies(typeof(UserRepository).Assembly)
+                .AddClasses(c => c.AssignableTo<IDomainRepository>(), publicOnly: false)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
 
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
