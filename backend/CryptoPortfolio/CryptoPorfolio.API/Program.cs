@@ -23,13 +23,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        var jwtSection = builder.Configuration.GetSection("Jwt");
+        var jwtOptions = jwtSection.Get<JwtOptions>();
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -37,10 +36,10 @@ builder.Services
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
-            ValidIssuer = configuration["Jwt:Issuer"],
-            ValidAudience = configuration["Jwt:Audience"],
+            ValidIssuer = jwtOptions?.Issuer,
+            ValidAudience = jwtOptions?.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
+                Encoding.UTF8.GetBytes(jwtOptions?.Key!)),
         };
     });
 
@@ -57,11 +56,11 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
+        Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "¬веди: Bearer {твой_токен}",
+        Description = "¬веди т≥льки JWT токен без преф≥кса 'Bearer '",
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
