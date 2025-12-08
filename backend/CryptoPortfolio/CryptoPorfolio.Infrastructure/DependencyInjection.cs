@@ -6,6 +6,7 @@ using CryptoPorfolio.Application.Abstractions.Security;
 using CryptoPorfolio.Domain.Repositories;
 using CryptoPorfolio.Infrastructure.Abstraction;
 using CryptoPorfolio.Infrastructure.Context;
+using CryptoPorfolio.Infrastructure.Repositories;
 using CryptoPorfolio.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,13 +43,8 @@ namespace CryptoPorfolio.Infrastructure
 
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer<CryptoPorfolioContext>>();
 
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            services.Scan(scan => scan
-                .FromAssemblies(assemblies)
-                .AddClasses(c => c.AssignableTo(typeof(IDomainRepository)))
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime());
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
 
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();

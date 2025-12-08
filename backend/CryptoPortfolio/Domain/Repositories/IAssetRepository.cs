@@ -9,7 +9,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// Repository interface for managing assets.
     /// </summary>
-    public interface IAssetRepository
+    public interface IAssetRepository : IDomainRepository
     {
         /// <summary>
         /// Get all assets.

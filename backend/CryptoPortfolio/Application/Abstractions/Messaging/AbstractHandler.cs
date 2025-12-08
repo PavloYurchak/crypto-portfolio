@@ -31,7 +31,7 @@ namespace CryptoPorfolio.Application.Abstractions.Messaging
             catch (Exception ex)
             {
                 logger?.LogError(ex, "Handler {Handler} failed", this.GetType().Name);
-                return HandlerResponse<TResponse>.Fail("Unexpected error");
+                return HandlerResponse<TResponse>.Fail($"Unexpected error {ex.Message} | {ex.StackTrace}");
             }
         }
 

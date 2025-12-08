@@ -7,7 +7,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// User Refresh Token Repository Interface.
     /// </summary>
-    public interface IUserRefreshTokenRepository
+    public interface IUserRefreshTokenRepository : IDomainRepository
     {
         /// <summary>
         /// Create a new user refresh token.

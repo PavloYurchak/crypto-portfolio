@@ -9,7 +9,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// Repository interface for managing user asset transactions.
     /// </summary>
-    public interface IUserAssetTransactionRepository
+    public interface IUserAssetTransactionRepository : IDomainRepository
     {
         /// <summary>
         /// Gets all transactions for a specific user asset.

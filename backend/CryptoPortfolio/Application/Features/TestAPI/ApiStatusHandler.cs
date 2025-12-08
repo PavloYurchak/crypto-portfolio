@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CryptoPorfolio.Application.Features.TestAPI
 {
-    public sealed class ApiStatusHandler(IValidator<ApiStatus> validator,
+    internal sealed class ApiStatusHandler(IValidator<ApiStatus> validator,
         ILogger<ApiStatusHandler> logger) : AbstractHandler<ApiStatus, bool>(validator, logger)
     {
         protected async override Task<HandlerResponse<bool>> HandleRequest(ApiStatus request, CancellationToken cancellationToken)

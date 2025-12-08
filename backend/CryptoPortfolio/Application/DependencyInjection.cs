@@ -26,10 +26,10 @@ namespace CryptoPorfolio.Application
             services.AddValidatorsFromAssembly(asm);
 
             services.Scan(scan => scan
-                .FromAssemblies(asm)
-                .AddClasses(c => c.AssignableTo(typeof(IHandler<,>)))
-                    .AsImplementedInterfaces()
-                    .WithScopedLifetime());
+            .FromAssemblies(asm)
+            .AddClasses(c => c.AssignableTo(typeof(IHandler<,>)), publicOnly: false)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
 
             services.AddScoped<ISender, MessageBus>();
 

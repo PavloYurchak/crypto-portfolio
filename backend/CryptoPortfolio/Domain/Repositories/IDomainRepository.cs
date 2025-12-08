@@ -7,5 +7,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// Represents a domain repository.
     /// </summary>
-    public interface IDomainRepository;
+    public interface IDomainRepository
+    {
+    }
 }

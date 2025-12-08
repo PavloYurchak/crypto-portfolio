@@ -9,7 +9,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// Repository interface for managing transaction types.
     /// </summary>
-    public interface ITransactionTypeRepository
+    public interface ITransactionTypeRepository : IDomainRepository
     {
         /// <summary>
         /// Gets all transaction types.

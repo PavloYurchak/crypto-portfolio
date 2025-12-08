@@ -9,7 +9,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// User asset repository interface.
     /// </summary>
-    public interface IUserAssetRepository
+    public interface IUserAssetRepository : IDomainRepository
     {
         /// <summary>
         /// Get user assets by user id.

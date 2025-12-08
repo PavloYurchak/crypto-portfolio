@@ -26,7 +26,6 @@ namespace CryptoPorfolio.Application.Features.Auth
             LoginUser request,
             CancellationToken cancellationToken)
         {
-
             var user = await userRepository.GetByEmailAsync(
                 request.Email,
                 cancellationToken);

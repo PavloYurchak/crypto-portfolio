@@ -20,18 +20,18 @@ namespace CryptoPorfolio.Infrastructure.Security
 
         public (string Token, DateTime ExpiresAt) GenerateAccessToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.options.SigningKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.options.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var now = DateTime.UtcNow;
             var expires = now.AddMinutes(this.options.AccessTokenLifetimeMinutes);
 
             var claims = new List<Claim>
-        {
-            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Name, user.UserName),
-            new(ClaimTypes.Email, user.Email),
-        };
+            {
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.UserName),
+                new(ClaimTypes.Email, user.Email),
+            };
 
             var token = new JwtSecurityToken(
                 issuer: this.options.Issuer,

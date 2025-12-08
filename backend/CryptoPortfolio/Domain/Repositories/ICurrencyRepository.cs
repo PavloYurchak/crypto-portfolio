@@ -9,7 +9,7 @@ namespace CryptoPorfolio.Domain.Repositories
     /// <summary>
     /// Repository interface for managing currencies.
     /// </summary>
-    public interface ICurrencyRepository
+    public interface ICurrencyRepository : IDomainRepository
     {
         /// <summary>
         /// Retrieves all currencies.

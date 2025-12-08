@@ -10,7 +10,7 @@ namespace CryptoPorfolio.Application.Abstractions.Security
 
         public required string Audience { get; set; }
 
-        public required string SigningKey { get; set; }
+        public required string Key { get; set; }
 
         public int AccessTokenLifetimeMinutes { get; set; } = 60;
     }
