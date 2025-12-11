@@ -198,5 +198,13 @@ namespace CryptoPorfolio.Infrastructure.Repositories
 
             return entity?.ToModel();
         }
+
+        public async Task<bool> IsUserEmptyAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await context.Users
+                .AsNoTracking()
+                .AnyAsync(e => e.DeletedAt == null, cancellationToken);
+            return !result;
+        }
     }
 }

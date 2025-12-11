@@ -77,6 +77,10 @@ public partial class CryptoPorfolioContext : DbContext
                 .IsUnique()
                 .HasFilter("[DeletedAt] IS NULL");
 
+            entity.HasIndex(e => e.UserType, "IXU_Users_UserType")
+                .IsUnique()
+                .HasFilter("[UserType] = 'Admin' AND [DeletedAt] IS NULL");
+
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
             entity.Property(e => e.Email).HasMaxLength(256);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
@@ -85,6 +89,9 @@ public partial class CryptoPorfolioContext : DbContext
             entity.Property(e => e.PasswordSalt).HasMaxLength(512);
             entity.Property(e => e.TwoFactorSecretKey).HasMaxLength(256);
             entity.Property(e => e.UserName).HasMaxLength(100);
+            entity.Property(e => e.UserType)
+                .HasMaxLength(50)
+                .HasDefaultValue("User");
         });
 
         modelBuilder.Entity<UserAsset>(entity =>

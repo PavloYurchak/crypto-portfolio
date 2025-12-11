@@ -7,7 +7,7 @@ using CryptoPorfolio.Application.Requests.TestAPI;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 
-namespace CryptoPorfolio.Application.Features.TestAPI
+namespace CryptoPorfolio.Application.Features.Status
 {
     internal sealed class ApiStatusHandler(IValidator<ApiStatus> validator,
         ILogger<ApiStatusHandler> logger) : AbstractHandler<ApiStatus, bool>(validator, logger)

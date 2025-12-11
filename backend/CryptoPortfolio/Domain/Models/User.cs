@@ -31,5 +31,7 @@ namespace CryptoPorfolio.Domain.Models
         public string? TwoFactorSecretKey { get; set; }
 
         public string? TwoFactorBackupCodes { get; set; }
+
+        public string UserType { get; set; } = "User";
     }
 }

@@ -92,5 +92,12 @@ namespace CryptoPorfolio.Domain.Repositories
             string? passwordSalt,
             string? passwordAlgo,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check if there are no users in the system.
+        /// </summary>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>True if there are no users; otherwise, false.</returns>
+        Task<bool> IsUserEmptyAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -25,6 +25,7 @@ namespace CryptoPorfolio.Infrastructure.Mapping
                 PasswordSalt = entity.PasswordSalt,
                 TwoFactorBackupCodes = entity.TwoFactorBackupCodes,
                 TwoFactorSecretKey = entity.TwoFactorSecretKey,
+                UserType = entity.UserType,
                 CreatedAt = entity.CreatedAt,
                 UpdatedAt = entity.UpdatedAt,
                 IsActive = entity.IsActive,
@@ -46,6 +47,7 @@ namespace CryptoPorfolio.Infrastructure.Mapping
                 PasswordSalt = model.PasswordSalt,
                 TwoFactorBackupCodes = model.TwoFactorBackupCodes,
                 PasswordHash = model.PasswordHash,
+                UserType = model.UserType,
                 IsActive = model.IsActive,
             };
         }

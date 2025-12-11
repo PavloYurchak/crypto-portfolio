@@ -4,6 +4,7 @@
 
     [Email]         NVARCHAR(256) NOT NULL,
     [UserName]      NVARCHAR(100) NOT NULL,
+    [UserType]      NVARCHAR(50)  NOT NULL DEFAULT 'User',
 
     [PasswordHash]  NVARCHAR(512) NOT NULL,
     [PasswordSalt]  NVARCHAR(512) NULL,
@@ -38,3 +39,8 @@ GO
 CREATE UNIQUE INDEX [IXU_Users_UserName] 
 ON [dbo].[Users] ([UserName]) 
 WHERE [DeletedAt] IS NULL;
+
+GO
+CREATE UNIQUE INDEX [IXU_Users_UserType]
+ON [dbo].[Users] ([UserType]) 
+WHERE [UserType] = 'Admin' AND [DeletedAt] IS NULL;

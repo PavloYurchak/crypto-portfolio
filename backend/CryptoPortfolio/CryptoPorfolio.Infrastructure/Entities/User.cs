@@ -13,6 +13,8 @@ public partial class User
 
     public string UserName { get; set; } = null!;
 
+    public string UserType { get; set; } = null!;
+
     public string PasswordHash { get; set; } = null!;
 
     public string? PasswordSalt { get; set; }
