@@ -11,7 +11,7 @@ using CryptoPorfolio.Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace CryptoPorfolio.Infrastructure.Security
+namespace CryptoPorfolio.Infrastructure.Services.Security
 {
     internal sealed class JwtTokenService(IOptions<JwtOptions> options)
     : IJwtTokenService
@@ -20,11 +20,11 @@ namespace CryptoPorfolio.Infrastructure.Security
 
         public (string Token, DateTime ExpiresAt) GenerateAccessToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.options.Key));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var now = DateTime.UtcNow;
-            var expires = now.AddMinutes(this.options.AccessTokenLifetimeMinutes);
+            var expires = now.AddMinutes(options.AccessTokenLifetimeMinutes);
 
             var claims = new List<Claim>
             {
@@ -34,8 +34,8 @@ namespace CryptoPorfolio.Infrastructure.Security
             };
 
             var token = new JwtSecurityToken(
-                issuer: this.options.Issuer,
-                audience: this.options.Audience,
+                issuer: options.Issuer,
+                audience: options.Audience,
                 claims: claims,
                 notBefore: now,
                 expires: expires,

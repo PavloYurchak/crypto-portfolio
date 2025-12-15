@@ -7,7 +7,7 @@ using CryptoPorfolio.Domain.Repositories;
 using CryptoPorfolio.Infrastructure.Abstraction;
 using CryptoPorfolio.Infrastructure.Context;
 using CryptoPorfolio.Infrastructure.Repositories;
-using CryptoPorfolio.Infrastructure.Security;
+using CryptoPorfolio.Infrastructure.Services.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

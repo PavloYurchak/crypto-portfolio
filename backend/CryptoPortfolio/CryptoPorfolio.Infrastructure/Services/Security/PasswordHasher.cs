@@ -5,7 +5,7 @@
 using System.Security.Cryptography;
 using CryptoPorfolio.Application.Abstractions.Security;
 
-namespace CryptoPorfolio.Infrastructure.Security
+namespace CryptoPorfolio.Infrastructure.Services.Security
 {
     internal sealed class PasswordHasher : IPasswordHasher
     {
