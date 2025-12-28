@@ -12,11 +12,11 @@ namespace CryptoPorfolio.Application.Abstractions.Messaging
         ILogger? logger) : IHandler<TRequest, TResponse>
     where TRequest : IHandlerRequest<TResponse>
     {
-        public async Task<HandlerResponse<TResponse>> Handle(TRequest request, CancellationToken ct)
+        public async Task<HandlerResponse<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
         {
             if (validator is not null)
             {
-                var result = await validator.ValidateAsync(request, ct);
+                var result = await validator.ValidateAsync(request, cancellationToken);
                 if (!result.IsValid)
                 {
                     var error = string.Join("; ", result.Errors.Select(e => e.ErrorMessage));
@@ -26,7 +26,7 @@ namespace CryptoPorfolio.Application.Abstractions.Messaging
 
             try
             {
-                return await this.HandleRequest(request, ct);
+                return await this.HandleRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -35,6 +35,6 @@ namespace CryptoPorfolio.Application.Abstractions.Messaging
             }
         }
 
-        protected abstract Task<HandlerResponse<TResponse>> HandleRequest(TRequest request, CancellationToken ct);
+        protected abstract Task<HandlerResponse<TResponse>> HandleRequest(TRequest request, CancellationToken cancellationToken);
     }
 }

@@ -12,6 +12,33 @@ namespace CryptoPorfolio.Infrastructure.Repositories
 {
     internal sealed class CurrencyRepository(CryptoPorfolioContext context) : ICurrencyRepository
     {
+        public async Task<Currency> CreateAsync(Currency currency, CancellationToken cancellationToken = default)
+        {
+            var entity = currency.ToEntity();
+
+            entity.CreatedAt = DateTime.UtcNow;
+            context.Currencies.Add(entity);
+
+            await context.SaveChangesAsync(cancellationToken);
+            return entity.ToModel();
+        }
+
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var entity = await context.Currencies
+                .SingleOrDefaultAsync(e => e.Id == id && e.DeletedAt == null, cancellationToken);
+
+            if (entity == null)
+            {
+                return false;
+            }
+
+            entity.DeletedAt = DateTime.UtcNow;
+            context.Currencies.Update(entity);
+            await context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+
         public async Task<IReadOnlyCollection<Currency>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await context.Currencies
@@ -36,6 +63,25 @@ namespace CryptoPorfolio.Infrastructure.Repositories
             var entity = await context.Currencies
                 .AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Symbol == symbol && e.DeletedAt == null, cancellationToken);
+
+            return entity?.ToModel();
+        }
+
+        public async Task<Currency?> UpdateAsync(Currency currency, CancellationToken cancellationToken = default)
+        {
+            var entity = await context.Currencies
+                .SingleOrDefaultAsync(e => e.Id == currency.Id && e.DeletedAt == null, cancellationToken);
+
+            if (entity != null)
+            {
+                entity.Name = currency.Name;
+                entity.Symbol = currency.Symbol;
+                entity.IsActive = currency.IsActive;
+                entity.UpdatedAt = DateTime.UtcNow;
+
+                context.Currencies.Update(entity);
+                await context.SaveChangesAsync(cancellationToken);
+            }
 
             return entity?.ToModel();
         }

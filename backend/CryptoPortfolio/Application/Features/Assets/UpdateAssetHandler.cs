@@ -3,6 +3,7 @@
 // </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
+using CryptoPorfolio.Application.Mapping;
 using CryptoPorfolio.Application.Requests.Assets;
 using CryptoPorfolio.Domain.Models;
 using CryptoPorfolio.Domain.Repositories;
@@ -32,7 +33,7 @@ namespace CryptoPorfolio.Application.Features.Assets
 
             try
             {
-                var result = await assetRepository.UpdateAssetAsync(asset, cancellationToken);
+                var result = await assetRepository.UpdateAssetAsync(request.ToModel(), cancellationToken);
 
                 await dbTransactionService.CommitAsync(cancellationToken);
 
