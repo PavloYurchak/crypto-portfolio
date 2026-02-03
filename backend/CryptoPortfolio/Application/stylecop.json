@@ -5,7 +5,9 @@
       "companyName": "CryptoPorfolio",
       "documentExposedElements": false,
       "documentInternalElements": false,
-      "documentPrivateElements": false
+      "documentPrivateElements": false,
+      "documentInterfaces": false,
+      "documentPrivateFields": false
     },
     "orderingRules": {
       "systemUsingDirectivesFirst": true,
