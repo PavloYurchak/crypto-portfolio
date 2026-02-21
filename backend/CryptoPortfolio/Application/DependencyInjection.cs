@@ -1,4 +1,3 @@
-
 using System.Reflection;
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using FluentValidation;
