@@ -1,6 +1,3 @@
-﻿// <copyright file="UserMappingProfile.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Domain.Models;
 

@@ -1,6 +1,3 @@
-﻿// <copyright file="UpdateCurrency.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 

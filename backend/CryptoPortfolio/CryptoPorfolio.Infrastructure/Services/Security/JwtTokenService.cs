@@ -1,6 +1,3 @@
-﻿// <copyright file="JwtTokenService.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

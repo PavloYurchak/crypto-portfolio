@@ -1,6 +1,3 @@
-﻿// <copyright file="UserRefreshTokenRepository.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Domain.Repositories;
 using CryptoPorfolio.Infrastructure.Context;

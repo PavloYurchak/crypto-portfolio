@@ -1,7 +1,3 @@
-﻿// <copyright file="CurrenciesController.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
-
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using CryptoPorfolio.Application.Requests.Currenices;
 using CryptoPorfolio.Domain.Models;
@@ -23,7 +19,7 @@ namespace CryptoPorfolio.API.Controller
         [Authorize]
         public async Task<IActionResult> GetCurrencies(CancellationToken cancellationToken)
         {
-            return await this.HandleRequest(new GetCurrencies(), cancellationToken);
+            return await HandleRequest(new GetCurrencies(), cancellationToken);
         }
 
         [HttpPost("currency")]
@@ -32,7 +28,7 @@ namespace CryptoPorfolio.API.Controller
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddCurrency([FromBody] AddCurrency request, CancellationToken cancellationToken)
         {
-            return await this.HandleRequest(request, cancellationToken);
+            return await HandleRequest(request, cancellationToken);
         }
 
         [HttpPut("currency")]
@@ -41,7 +37,7 @@ namespace CryptoPorfolio.API.Controller
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCurrency([FromBody] UpdateCurrency request, CancellationToken cancellationToken)
         {
-            return await this.HandleRequest(request, cancellationToken);
+            return await HandleRequest(request, cancellationToken);
         }
 
         [HttpDelete("currency/{currencyId}")]
@@ -50,7 +46,7 @@ namespace CryptoPorfolio.API.Controller
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCurrency([FromRoute] int currencyId, CancellationToken cancellationToken)
         {
-            return await this.HandleRequest(new DeleteCurrency(currencyId), cancellationToken);
+            return await HandleRequest(new DeleteCurrency(currencyId), cancellationToken);
         }
     }
 }

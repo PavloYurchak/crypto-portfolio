@@ -1,6 +1,3 @@
-﻿// <copyright file="DependencyInjection.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Security;
 using CryptoPorfolio.Domain.Repositories;
@@ -16,17 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CryptoPorfolio.Infrastructure
 {
-    /// <summary>
-    /// Dependency injection extension methods for the Infrastructure layer.
-    /// </summary>
     public static class DependencyInjection
     {
-        /// <summary>
-        /// Adds Infrastructure services to the IServiceCollection.
-        /// </summary>
-        /// <param name="services">The service collection to which the infrastructure services will be added.</param>
-        /// <param name="configuration">The application configuration used to configure the services.</param>
-        /// <returns>The updated service collection.</returns>
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var dbProvider = configuration["Database:Provider"] ?? "SqlServer";

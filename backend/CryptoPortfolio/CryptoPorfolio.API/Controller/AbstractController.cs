@@ -1,6 +1,3 @@
-﻿// <copyright file="AbstractController.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using Microsoft.AspNetCore.Mvc;
@@ -15,24 +12,24 @@ namespace CryptoPorfolio.API.Controller
             IHandlerRequest<TResponse> request,
             CancellationToken cancellationToken)
         {
-            if (!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return this.ValidationProblem(this.ModelState);
+                return ValidationProblem(ModelState);
             }
 
             try
             {
                 var result = await sender.Send(request, cancellationToken);
 
-                return this.ToActionResult(result);
+                return ToActionResult(result);
             }
             catch (OperationCanceledException)
             {
-                return this.Problem(title: "Request canceled", statusCode: StatusCodes.Status400BadRequest);
+                return Problem(title: "Request canceled", statusCode: StatusCodes.Status400BadRequest);
             }
             catch (Exception ex)
             {
-                return this.Problem(
+                return Problem(
                     title: "Unexpected error",
                     detail: ex.Message,
                     statusCode: StatusCodes.Status500InternalServerError);
@@ -45,19 +42,19 @@ namespace CryptoPorfolio.API.Controller
 
             return code switch
             {
-                201 => this.StatusCode(StatusCodes.Status201Created),
-                204 => this.NoContent(),
+                201 => StatusCode(StatusCodes.Status201Created),
+                204 => NoContent(),
 
-                400 => this.BadRequest(result.Error),
-                401 => this.Unauthorized(result.Error),
-                403 => this.Forbid(),
-                404 => this.NotFound(result.Error),
-                409 => this.Conflict(result.Error),
+                400 => BadRequest(result.Error),
+                401 => Unauthorized(result.Error),
+                403 => Forbid(),
+                404 => NotFound(result.Error),
+                409 => Conflict(result.Error),
 
-                int c when c >= 500 => this.Problem(title: "Error", detail: result.Error, statusCode: c),
-                503 => this.StatusCode(StatusCodes.Status503ServiceUnavailable, result.Error),
+                int c when c >= 500 => Problem(title: "Error", detail: result.Error, statusCode: c),
+                503 => StatusCode(StatusCodes.Status503ServiceUnavailable, result.Error),
 
-                _ => this.Ok(result),
+                _ => Ok(result),
             };
         }
     }

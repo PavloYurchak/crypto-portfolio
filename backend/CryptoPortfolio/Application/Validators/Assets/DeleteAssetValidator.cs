@@ -1,6 +1,3 @@
-﻿// <copyright file="DeleteAsset.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Requests.Assets;
 using FluentValidation;
@@ -11,7 +8,7 @@ namespace CryptoPorfolio.Application.Validators.Assets
     {
         public DeleteAssetValidator()
         {
-            this.RuleFor(x => x.Id)
+            RuleFor(x => x.Id)
                 .NotEmpty();
         }
     }

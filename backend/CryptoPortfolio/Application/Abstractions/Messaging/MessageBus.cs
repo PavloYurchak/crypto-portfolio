@@ -1,6 +1,3 @@
-﻿// <copyright file="MessageBus.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using Microsoft.Extensions.DependencyInjection;
 

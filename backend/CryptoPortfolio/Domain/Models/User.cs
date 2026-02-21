@@ -1,6 +1,3 @@
-﻿// <copyright file="User.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 namespace CryptoPorfolio.Domain.Models
 {

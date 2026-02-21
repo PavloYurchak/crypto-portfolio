@@ -1,6 +1,3 @@
-// <copyright file="Program.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using System.Reflection;
 using System.Text;

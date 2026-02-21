@@ -1,6 +1,3 @@
-﻿// <copyright file="ApiStatusController.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using CryptoPorfolio.Application.Requests.TestAPI;
@@ -19,6 +16,6 @@ namespace CryptoPorfolio.API.Controller
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize]
         public async Task<IActionResult> GetStatus(CancellationToken cancellationToken)
-            => await this.HandleRequest(new ApiStatus(), cancellationToken);
+            => await HandleRequest(new ApiStatus(), cancellationToken);
     }
 }

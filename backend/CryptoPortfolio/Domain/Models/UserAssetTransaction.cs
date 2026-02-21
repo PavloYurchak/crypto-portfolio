@@ -1,6 +1,3 @@
-﻿// <copyright file="UserAssetTransaction.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 namespace CryptoPorfolio.Domain.Models
 {
@@ -20,7 +17,7 @@ namespace CryptoPorfolio.Domain.Models
 
         public required string CurrencySymbol { get; set; }
 
-        public string PairSymbol => $"{this.AssetSymbol}/{this.CurrencySymbol}";
+        public string PairSymbol => $"{AssetSymbol}/{CurrencySymbol}";
 
         public int TransactionTypeId { get; set; }
 

@@ -1,6 +1,3 @@
-﻿// <copyright file="TransactionTypes.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 namespace CryptoPorfolio.Application.Models
 {
@@ -9,7 +6,7 @@ namespace CryptoPorfolio.Application.Models
         public static readonly TransactionTypes Buy = new("BUY");
         public static readonly TransactionTypes Sell = new("SELL");
 
-        private TransactionTypes(string value) => this.Value = value;
+        private TransactionTypes(string value) => Value = value;
 
         public static TransactionTypes[] All => [Buy, Sell];
 

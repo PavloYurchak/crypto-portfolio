@@ -1,6 +1,3 @@
-﻿// <copyright file="ApiStatusValidator.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Requests.TestAPI;
 using FluentValidation;

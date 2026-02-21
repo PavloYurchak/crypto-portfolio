@@ -1,6 +1,3 @@
-﻿// <copyright file="AbstractHandler.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -26,11 +23,11 @@ namespace CryptoPorfolio.Application.Abstractions.Messaging
 
             try
             {
-                return await this.HandleRequest(request, cancellationToken);
+                return await HandleRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "Handler {Handler} failed", this.GetType().Name);
+                logger?.LogError(ex, "Handler {Handler} failed", GetType().Name);
                 return HandlerResponse<TResponse>.Fail($"Unexpected error {ex.Message} | {ex.StackTrace}");
             }
         }

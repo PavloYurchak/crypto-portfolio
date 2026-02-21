@@ -1,6 +1,3 @@
-﻿// <copyright file="PasswordHasher.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using System.Security.Cryptography;
 using CryptoPorfolio.Application.Abstractions.Security;

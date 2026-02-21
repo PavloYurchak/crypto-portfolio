@@ -1,6 +1,3 @@
-﻿// <copyright file="RefreshUserTokenHandler.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using CryptoPorfolio.Application.Abstractions.Security;
@@ -36,7 +33,6 @@ namespace CryptoPorfolio.Application.Features.Auth
                 return HandlerResponse<AuthResult>.Fail("User not found.");
             }
 
-            // Можна відкликати старий refresh токен
             await refreshTokenRepository.RevokeAsync(request.RefreshToken, "Replaced by new token", cancellationToken);
 
             var (accessToken, expiresAt) = jwtTokenService.GenerateAccessToken(user);

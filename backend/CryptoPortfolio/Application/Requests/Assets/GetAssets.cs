@@ -1,6 +1,3 @@
-﻿// <copyright file="GetAssets.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 

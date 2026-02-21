@@ -1,6 +1,3 @@
-﻿// <copyright file="AuthResultMappingProfile.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Response;
 using CryptoPorfolio.Domain.Models;

@@ -1,12 +1,6 @@
-﻿// <copyright file="UnitTest1.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 namespace CryptoPorfolio.IntefrationTests
 {
-    /// <summary>
-    /// Tests class.
-    /// </summary>
     public class Tests
     {
         [SetUp]

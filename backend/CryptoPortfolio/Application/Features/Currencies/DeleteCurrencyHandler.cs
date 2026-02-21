@@ -1,6 +1,3 @@
-﻿// <copyright file="DeleteCurrencyHandler.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using CryptoPorfolio.Application.Requests.Currenices;

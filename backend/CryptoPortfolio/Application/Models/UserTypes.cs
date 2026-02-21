@@ -1,6 +1,3 @@
-﻿// <copyright file="UserTypes.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 namespace CryptoPorfolio.Application.Models
 {
@@ -9,7 +6,7 @@ namespace CryptoPorfolio.Application.Models
         public static readonly UserTypes Admin = new("Admin");
         public static readonly UserTypes User = new("User");
 
-        private UserTypes(string value) => this.Value = value;
+        private UserTypes(string value) => Value = value;
 
         public static UserTypes[] All => [Admin, User];
 

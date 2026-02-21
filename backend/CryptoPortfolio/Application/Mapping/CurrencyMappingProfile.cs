@@ -1,6 +1,3 @@
-﻿// <copyright file="CurrencyMappingProfile.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Requests.Assets;
 using CryptoPorfolio.Application.Requests.Currenices;

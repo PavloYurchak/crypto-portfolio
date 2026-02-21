@@ -1,6 +1,3 @@
-﻿// <copyright file="RegisterUserHandler.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using CryptoPorfolio.Application.Abstractions.Security;
@@ -66,7 +63,7 @@ namespace CryptoPorfolio.Application.Features.Auth
             var (accessToken, expiresAt) = jwtTokenService.GenerateAccessToken(createdUser);
 
             var refreshToken = jwtTokenService.GenerateRefreshToken();
-            var refreshExpiresAt = DateTime.UtcNow.AddDays(7); // або з конфігурації
+            var refreshExpiresAt = DateTime.UtcNow.AddDays(7); 
 
             await refreshTokenRepository.CreateAsync(createdUser.Id, refreshToken, refreshExpiresAt, cancellationToken);
 

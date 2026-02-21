@@ -1,6 +1,3 @@
-﻿// <copyright file="DbTransactionService.cs" company="CryptoPorfolio">
-// Copyright (c) CryptoPorfolio. All rights reserved.
-// </copyright>
 
 using CryptoPorfolio.Domain.Services;
 using CryptoPorfolio.Infrastructure.Context;
@@ -14,22 +11,22 @@ namespace CryptoPorfolio.Infrastructure.Services
 
         public async Task BeginTransactionAsync(CancellationToken ct)
         {
-            this.dbTransactionService = await context.Database.BeginTransactionAsync(ct);
+            dbTransactionService = await context.Database.BeginTransactionAsync(ct);
         }
 
         public async Task CommitAsync(CancellationToken ct)
         {
-            if (this.dbTransactionService != null)
+            if (dbTransactionService != null)
             {
-                await this.dbTransactionService.CommitAsync(ct);
+                await dbTransactionService.CommitAsync(ct);
             }
         }
 
         public async Task RollbackAsync(CancellationToken ct)
         {
-            if (this.dbTransactionService != null)
+            if (dbTransactionService != null)
             {
-                await this.dbTransactionService.RollbackAsync(ct);
+                await dbTransactionService.RollbackAsync(ct);
             }
         }
     }
