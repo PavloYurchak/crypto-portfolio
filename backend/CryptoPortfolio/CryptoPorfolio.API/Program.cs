@@ -2,11 +2,13 @@
 // Copyright (c) CryptoPorfolio. All rights reserved.
 // </copyright>
 
+using System.Reflection;
 using System.Text;
 using CryptoPorfolio.Application;
 using CryptoPorfolio.Application.Abstractions.Security;
 using CryptoPorfolio.Infrastructure;
 using CryptoPorfolio.Infrastructure.Abstraction;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

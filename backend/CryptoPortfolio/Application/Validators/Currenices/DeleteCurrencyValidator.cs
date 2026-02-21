@@ -7,7 +7,7 @@ using FluentValidation;
 
 namespace CryptoPorfolio.Application.Validators.Currenices
 {
-    internal class DeleteCurrencyValidator : AbstractValidator<DeleteCurrency>
+    public class DeleteCurrencyValidator : AbstractValidator<DeleteCurrency>
     {
         public DeleteCurrencyValidator()
         {

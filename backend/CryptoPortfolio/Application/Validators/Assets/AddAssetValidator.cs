@@ -7,7 +7,7 @@ using FluentValidation;
 
 namespace CryptoPorfolio.Application.Validators.Assets
 {
-    internal class AddAssetValidator : AbstractValidator<AddAsset>
+    public class AddAssetValidator : AbstractValidator<AddAsset>
     {
         public AddAssetValidator()
         {

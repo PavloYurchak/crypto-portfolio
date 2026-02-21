@@ -4,9 +4,11 @@
 
 using CryptoPorfolio.Application.Abstractions.Security;
 using CryptoPorfolio.Domain.Repositories;
+using CryptoPorfolio.Domain.Services;
 using CryptoPorfolio.Infrastructure.Abstraction;
 using CryptoPorfolio.Infrastructure.Context;
 using CryptoPorfolio.Infrastructure.Repositories;
+using CryptoPorfolio.Infrastructure.Services;
 using CryptoPorfolio.Infrastructure.Services.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +53,7 @@ namespace CryptoPorfolio.Infrastructure
 
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IDbTransactionService, DbTransactionService>();
 
             return services;
         }

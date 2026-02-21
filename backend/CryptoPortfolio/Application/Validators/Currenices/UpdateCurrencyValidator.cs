@@ -7,7 +7,7 @@ using FluentValidation;
 
 namespace CryptoPorfolio.Application.Validators.Currenices
 {
-    internal class UpdateCurrencyValidator : AbstractValidator<UpdateCurrency>
+    public class UpdateCurrencyValidator : AbstractValidator<UpdateCurrency>
     {
         public UpdateCurrencyValidator()
         {

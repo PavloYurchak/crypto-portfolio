@@ -7,7 +7,7 @@ using FluentValidation;
 
 namespace CryptoPorfolio.Application.Validators.Assets
 {
-    internal class DeleteAssetValidator : AbstractValidator<DeleteAsset>
+    public class DeleteAssetValidator : AbstractValidator<DeleteAsset>
     {
         public DeleteAssetValidator()
         {
