@@ -21,6 +21,17 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<IReadOnlyCollection<User>> GetAllIncludingInactiveAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return await context.Users
+                .AsNoTracking()
+                .Where(e => e.DeletedAt == null)
+                .OrderBy(e => e.Id)
+                .Select(e => e.ToModel())
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<User?> GetByIdAsync(
             int id,
             CancellationToken cancellationToken = default)
