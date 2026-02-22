@@ -20,6 +20,7 @@ namespace CryptoPorfolio.API.Controller
         [Authorize]
         public async Task<IActionResult> GetUserAssetTransactions(
             [FromQuery] int assetId,
+            [FromQuery] int currencyId,
             CancellationToken cancellationToken)
         {
             if (!TryGetUserId(out var userId))
@@ -27,7 +28,7 @@ namespace CryptoPorfolio.API.Controller
                 return Unauthorized();
             }
 
-            return await HandleRequest(new GetUserAssetTransactions(userId, assetId), cancellationToken);
+            return await HandleRequest(new GetUserAssetTransactions(userId, assetId, currencyId), cancellationToken);
         }
 
         [HttpGet("user-asset-transactions/{transactionId:long}")]

@@ -3,7 +3,7 @@ using CryptoPorfolio.Domain.Models;
 
 namespace CryptoPorfolio.Application.Requests.UserAssets
 {
-    public sealed record UpdateUserAsset : IHandlerRequest<UserAsset>
+    public sealed record AdjustUserAsset : IHandlerRequest<UserAsset>
     {
         public int UserId { get; init; }
 
@@ -11,7 +11,7 @@ namespace CryptoPorfolio.Application.Requests.UserAssets
 
         public int CurrencyId { get; init; }
 
-        public decimal Quantity { get; init; }
+        public decimal DeltaQuantity { get; init; }
 
         public decimal Price { get; init; }
 

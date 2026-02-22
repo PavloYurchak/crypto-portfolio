@@ -16,7 +16,7 @@ namespace CryptoPorfolio.UnitTests.Controllers
 
             var controller = ControllerFactory.CreateWithUser(new UserAssetTransactionsController(sender));
 
-            var result = await controller.GetUserAssetTransactions(1, CancellationToken.None);
+            var result = await controller.GetUserAssetTransactions(1, 1, CancellationToken.None);
 
             TestAssertions.AssertOk(result);
         }

@@ -9,6 +9,12 @@ namespace CryptoPorfolio.Application.Requests.UserAssets
 
         public int AssetId { get; init; }
 
+        public int CurrencyId { get; init; }
+
         public decimal Quantity { get; init; }
+
+        public decimal Price { get; init; }
+
+        public DateTime? ExecutedAt { get; init; }
     }
 }

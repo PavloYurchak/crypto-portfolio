@@ -17,6 +17,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
             return await context.UserAssets
                 .AsNoTracking()
                 .Include(e => e.Asset)
+                .Include(e => e.Currency)
                 .Where(e => e.UserId == userId && e.DeletedAt == null)
                 .OrderBy(e => e.Asset.Symbol)
                 .Select(e => e.ToModel())
@@ -26,15 +27,18 @@ namespace CryptoPorfolio.Infrastructure.Repositories
         public async Task<UserAsset?> GetByUserAndAssetAsync(
             int userId,
             int assetId,
+            int currencyId,
             CancellationToken cancellationToken = default)
         {
             var entity = await context.UserAssets
                 .AsNoTracking()
                 .Include(e => e.Asset)
+                .Include(e => e.Currency)
                 .SingleOrDefaultAsync(
                     e =>
                     e.UserId == userId &&
                     e.AssetId == assetId &&
+                    e.CurrencyId == currencyId &&
                     e.DeletedAt == null,
                     cancellationToken);
 
@@ -51,6 +55,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
 
             entity = await context.UserAssets
                 .Include(e => e.Asset)
+                .Include(e => e.Currency)
                 .SingleAsync(e => e.Id == entity.Id, cancellationToken);
 
             return entity.ToModel();
@@ -70,9 +75,15 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                 entity.Quantity = model.Quantity;
                 entity.AssetId = model.AssetId;
                 entity.UserId = model.UserId;
+                entity.CurrencyId = model.CurrencyId;
                 entity.UpdatedAt = DateTime.UtcNow;
 
                 await context.SaveChangesAsync(cancellationToken);
+
+                entity = await context.UserAssets
+                    .Include(e => e.Asset)
+                    .Include(e => e.Currency)
+                    .SingleAsync(e => e.Id == entity.Id, cancellationToken);
             }
 
             return entity?.ToModel();
@@ -81,6 +92,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
         public async Task<bool> Delete(
             int userId,
             int assetId,
+            int currencyId,
             CancellationToken cancellationToken = default)
         {
             var entity = await context.UserAssets
@@ -88,6 +100,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                     e =>
                     e.UserId == userId &&
                     e.AssetId == assetId &&
+                    e.CurrencyId == currencyId &&
                     !e.DeletedAt.HasValue,
                     cancellationToken);
 

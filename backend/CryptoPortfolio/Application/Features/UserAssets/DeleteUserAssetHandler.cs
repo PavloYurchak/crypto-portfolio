@@ -19,6 +19,7 @@ namespace CryptoPorfolio.Application.Features.UserAssets
             var existing = await userAssetRepository.GetByUserAndAssetAsync(
                 request.UserId,
                 request.AssetId,
+                request.CurrencyId,
                 cancellationToken);
 
             if (existing is null)
@@ -26,7 +27,11 @@ namespace CryptoPorfolio.Application.Features.UserAssets
                 return HandlerResponse<bool>.NotFound("User asset not found.");
             }
 
-            var deleted = await userAssetRepository.Delete(request.UserId, request.AssetId, cancellationToken);
+            var deleted = await userAssetRepository.Delete(
+                request.UserId,
+                request.AssetId,
+                request.CurrencyId,
+                cancellationToken);
             return deleted
                 ? HandlerResponse<bool>.Ok(deleted)
                 : HandlerResponse<bool>.NotFound("User asset not found.");

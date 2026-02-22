@@ -12,6 +12,9 @@ namespace CryptoPorfolio.Application.Features.UserAssets
     internal sealed class CreateUserAssetHandler(
         IUserAssetRepository userAssetRepository,
         IAssetRepository assetRepository,
+        ICurrencyRepository currencyRepository,
+        ITransactionTypeRepository transactionTypeRepository,
+        IUserAssetTransactionRepository userAssetTransactionRepository,
         IDbTransactionService dbTransactionService,
         IValidator<AddUserAsset> validator,
         ILogger<CreateUserAssetHandler> logger)
@@ -27,9 +30,16 @@ namespace CryptoPorfolio.Application.Features.UserAssets
                 return HandlerResponse<UserAsset>.NotFound("Asset not found.");
             }
 
+            var currency = await currencyRepository.GetByIdAsync(request.CurrencyId, cancellationToken);
+            if (currency is null)
+            {
+                return HandlerResponse<UserAsset>.NotFound("Currency not found.");
+            }
+
             var existing = await userAssetRepository.GetByUserAndAssetAsync(
                 request.UserId,
                 request.AssetId,
+                request.CurrencyId,
                 cancellationToken);
 
             if (existing is not null)
@@ -46,12 +56,46 @@ namespace CryptoPorfolio.Application.Features.UserAssets
 
             try
             {
-                var added = await userAssetRepository.Create(request.ToModel(asset), cancellationToken);
+                var added = await userAssetRepository.Create(
+                    request.ToModel(asset) with { CurrencySymbol = currency.Symbol },
+                    cancellationToken);
+
+                if (added is null)
+                {
+                    await dbTransactionService.RollbackAsync(cancellationToken);
+                    return HandlerResponse<UserAsset>.Fail("Failed to create user asset.");
+                }
+
+                var transactionType = await transactionTypeRepository.GetByCodeAsync(
+                    Application.Models.TransactionTypes.Buy,
+                    cancellationToken);
+                if (transactionType is null)
+                {
+                    await dbTransactionService.RollbackAsync(cancellationToken);
+                    return HandlerResponse<UserAsset>.Fail("Transaction type not found.");
+                }
+
+                var transaction = new UserAssetTransaction
+                {
+                    UserId = request.UserId,
+                    UserAssetId = added.Id,
+                    AssetId = request.AssetId,
+                    AssetSymbol = asset.Symbol,
+                    CurrencyId = request.CurrencyId,
+                    CurrencySymbol = currency.Symbol,
+                    TransactionTypeId = transactionType.Id,
+                    TransactionTypeCode = transactionType.Code,
+                    Quantity = request.Quantity,
+                    Amount = request.Quantity * request.Price,
+                    Price = request.Price,
+                    ExecutedAt = request.ExecutedAt ?? DateTime.UtcNow,
+                };
+
+                await userAssetTransactionRepository.CreateAsync(transaction, cancellationToken);
+
                 await dbTransactionService.CommitAsync(cancellationToken);
 
-                return added is not null
-                    ? HandlerResponse<UserAsset>.Ok(added)
-                    : HandlerResponse<UserAsset>.Fail("Failed to create user asset.");
+                return HandlerResponse<UserAsset>.Ok(added);
             }
             catch (Exception)
             {

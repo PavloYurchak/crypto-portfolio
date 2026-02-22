@@ -55,8 +55,10 @@ namespace CryptoPorfolio.UnitTests.Helpers
                 Id = 1,
                 UserId = 1,
                 AssetId = 1,
+                CurrencyId = 1,
                 AssetSymbol = "BTC",
                 AssetName = "Bitcoin",
+                CurrencySymbol = "USDT",
                 Quantity = 1.5m,
             };
 

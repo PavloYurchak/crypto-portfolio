@@ -1,0 +1,12 @@
+# Build artifacts
+bin/
+obj/
+
+# User files
+.vs/
+.vscode/
+
+# App settings (local)
+appsettings.json
+appsettings.*.json
+CryptoPorfolio.Worker/appsettings.json

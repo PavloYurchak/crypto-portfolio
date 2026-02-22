@@ -11,8 +11,10 @@ namespace CryptoPorfolio.Application.Mapping
             {
                 UserId = request.UserId,
                 AssetId = request.AssetId,
+                CurrencyId = request.CurrencyId,
                 AssetSymbol = asset.Symbol,
                 AssetName = asset.Name,
+                CurrencySymbol = string.Empty,
                 Quantity = request.Quantity,
             };
         }
@@ -24,8 +26,10 @@ namespace CryptoPorfolio.Application.Mapping
                 Id = existing.Id,
                 UserId = request.UserId,
                 AssetId = existing.AssetId,
+                CurrencyId = existing.CurrencyId,
                 AssetSymbol = existing.AssetSymbol,
                 AssetName = existing.AssetName,
+                CurrencySymbol = existing.CurrencySymbol,
                 Quantity = request.Quantity,
                 CreatedAt = existing.CreatedAt,
                 UpdatedAt = existing.UpdatedAt,

@@ -25,6 +25,7 @@ namespace CryptoPorfolio.Application.Services
             var userAsset = await userAssetRepository.GetByUserAndAssetAsync(
                 request.UserId,
                 request.AssetId,
+                request.CurrencyId,
                 cancellationToken);
 
             if (userAsset is null)

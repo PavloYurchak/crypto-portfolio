@@ -7,12 +7,16 @@ namespace CryptoPorfolio.Domain.Repositories
     {
         Task<IReadOnlyCollection<UserAsset>> GetByUserAsync(int userId, CancellationToken cancellationToken = default);
 
-        Task<UserAsset?> GetByUserAndAssetAsync(int userId, int assetId, CancellationToken cancellationToken = default);
+        Task<UserAsset?> GetByUserAndAssetAsync(
+            int userId,
+            int assetId,
+            int currencyId,
+            CancellationToken cancellationToken = default);
 
         Task<UserAsset?> Create(UserAsset model, CancellationToken cancellationToken = default);
 
         Task<UserAsset?> Update(UserAsset model, CancellationToken cancellationToken = default);
 
-        Task<bool> Delete(int userId, int assetId, CancellationToken cancellationToken = default);
+        Task<bool> Delete(int userId, int assetId, int currencyId, CancellationToken cancellationToken = default);
     }
 }

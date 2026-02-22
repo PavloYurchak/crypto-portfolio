@@ -11,6 +11,8 @@ namespace CryptoPorfolio.Application.Validators.UserAssetTransactions
                 .GreaterThan(0);
             RuleFor(x => x.AssetId)
                 .GreaterThan(0);
+            RuleFor(x => x.CurrencyId)
+                .GreaterThan(0);
         }
     }
 }
