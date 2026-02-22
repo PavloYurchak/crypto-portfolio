@@ -20,4 +20,8 @@
 		<Using Include="NUnit.Framework" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\CryptoPorfolio.API\CryptoPorfolio.API.csproj" />
+	</ItemGroup>
+
 </Project>

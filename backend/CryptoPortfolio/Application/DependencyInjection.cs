@@ -19,6 +19,12 @@ namespace CryptoPorfolio.Application
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
+            services.Scan(scan => scan
+                .FromAssemblies(asm)
+                .AddClasses(c => c.AssignableTo(typeof(Abstractions.Services.IApplicationService)), publicOnly: false)
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
+
             services.AddScoped<ISender, MessageBus>();
 
             return services;

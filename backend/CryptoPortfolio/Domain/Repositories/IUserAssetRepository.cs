@@ -12,5 +12,7 @@ namespace CryptoPorfolio.Domain.Repositories
         Task<UserAsset?> Create(UserAsset model, CancellationToken cancellationToken = default);
 
         Task<UserAsset?> Update(UserAsset model, CancellationToken cancellationToken = default);
+
+        Task<bool> Delete(int userId, int assetId, CancellationToken cancellationToken = default);
     }
 }

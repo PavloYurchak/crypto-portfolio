@@ -1,0 +1,24 @@
+using CryptoPorfolio.Application.Abstractions.Messaging;
+using CryptoPorfolio.Domain.Models;
+
+namespace CryptoPorfolio.Application.Requests.UserAssetTransactions
+{
+    public sealed record AddUserAssetTransaction : IHandlerRequest<UserAssetTransaction>
+    {
+        public int UserId { get; init; }
+
+        public int AssetId { get; init; }
+
+        public int CurrencyId { get; init; }
+
+        public required string TransactionTypeCode { get; init; }
+
+        public decimal Quantity { get; init; }
+
+        public decimal Amount { get; init; }
+
+        public decimal Price { get; init; }
+
+        public DateTime ExecutedAt { get; init; }
+    }
+}

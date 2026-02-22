@@ -12,7 +12,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
     : IUserAssetTransactionRepository
     {
         public async Task<IEnumerable<UserAssetTransaction>> GetUserTransactionsAsync(
-            int userAssetId,
+            long userAssetId,
             CancellationToken cancellationToken = default)
         {
             var result = await context.UserAssetTransactions
@@ -20,8 +20,8 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                 .Include(e => e.Asset)
                 .Include(e => e.Currency)
                 .Include(e => e.Type)
-                .Where(e => e.UserAssetId == userAssetId)
-                .ToListAsync();
+                .Where(e => e.UserAssetId == userAssetId && e.DeletedAt == null)
+                .ToListAsync(cancellationToken);
 
             return result.Select(e => e.ToModel());
         }
@@ -33,7 +33,7 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                 .Include(e => e.Asset)
                 .Include(e => e.Currency)
                 .Include(e => e.Type)
-                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+                .SingleOrDefaultAsync(e => e.Id == id && e.DeletedAt == null, cancellationToken);
 
             return entity?.ToModel();
         }

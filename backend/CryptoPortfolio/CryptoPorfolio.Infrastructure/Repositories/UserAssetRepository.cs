@@ -77,5 +77,28 @@ namespace CryptoPorfolio.Infrastructure.Repositories
 
             return entity?.ToModel();
         }
+
+        public async Task<bool> Delete(
+            int userId,
+            int assetId,
+            CancellationToken cancellationToken = default)
+        {
+            var entity = await context.UserAssets
+                .SingleOrDefaultAsync(
+                    e =>
+                    e.UserId == userId &&
+                    e.AssetId == assetId &&
+                    !e.DeletedAt.HasValue,
+                    cancellationToken);
+
+            if (entity is null)
+            {
+                return false;
+            }
+
+            entity.DeletedAt = DateTime.UtcNow;
+            await context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
     }
 }
