@@ -1,0 +1,73 @@
+<div class="profile-page">
+  <div class="profile-header">
+    <button mat-stroked-button type="button" routerLink="/dashboard">Back to dashboard</button>
+  </div>
+
+  <mat-card appearance="outlined" class="profile-card" *ngIf="isLoading">
+    <div class="loading-wrap">
+      <mat-progress-spinner mode="indeterminate" diameter="28"></mat-progress-spinner>
+      <p>Loading profile...</p>
+    </div>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="profile-card" *ngIf="!isLoading && error">
+    <h1>Profile</h1>
+    <p class="error-text">{{ error }}</p>
+    <button mat-flat-button color="primary" type="button" (click)="reload()">Retry</button>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="profile-card" *ngIf="!isLoading && profile">
+    <h1>Profile</h1>
+
+    <div class="profile-grid">
+      <div class="field">
+        <span class="label">ID</span>
+        <span class="value">{{ profile.id }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Username</span>
+        <span class="value">{{ profile.userName }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Email</span>
+        <span class="value">{{ profile.email }}</span>
+      </div>
+      <div class="field">
+        <span class="label">User type</span>
+        <span class="value">{{ profile.userType }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Email confirmed</span>
+        <span class="value">{{ profile.emailConfirmed ? 'Yes' : 'No' }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Two-factor</span>
+        <span class="value">{{ profile.twoFactorEnabled ? 'Enabled' : 'Disabled' }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Active</span>
+        <span class="value">{{ profile.isActive ? 'Yes' : 'No' }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Locked</span>
+        <span class="value">{{ profile.isLockedOut ? 'Yes' : 'No' }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Failed logins</span>
+        <span class="value">{{ profile.failedAccessCount }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Created</span>
+        <span class="value">{{ profile.createdAt | date: 'medium' }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Updated</span>
+        <span class="value">{{ profile.updatedAt ? (profile.updatedAt | date: 'medium') : '-' }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Lockout end</span>
+        <span class="value">{{ profile.lockoutEndAt ? (profile.lockoutEndAt | date: 'medium') : '-' }}</span>
+      </div>
+    </div>
+  </mat-card>
+</div>

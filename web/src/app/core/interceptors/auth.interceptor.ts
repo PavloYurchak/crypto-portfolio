@@ -8,7 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const accessToken = authService.getAccessToken();
 
-  if (!accessToken || !req.url.startsWith(environment.apiBaseUrl)) {
+  if (!accessToken || !isApiRequest(req.url)) {
     return next(req);
   }
 
@@ -20,3 +20,23 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     })
   );
 };
+
+function isApiRequest(url: string): boolean {
+  if (url.startsWith('/api/') || url.startsWith('api/')) {
+    return true;
+  }
+
+  if (url.startsWith(environment.apiBaseUrl)) {
+    return true;
+  }
+
+  if (/^https?:\/\//i.test(url)) {
+    try {
+      return new URL(url).pathname.startsWith('/api/');
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
+}

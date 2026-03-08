@@ -1,7 +1,32 @@
 <div class="dashboard-page">
-  <mat-card appearance="outlined">
-    <h1>Welcome, {{ userName }}</h1>
-    <p>This is your starter dashboard for the crypto portfolio app.</p>
-    <button mat-flat-button color="primary" type="button" (click)="logout()">Logout</button>
-  </mat-card>
+  <mat-toolbar class="top-nav">
+    <div class="brand-wrap">
+      <span class="brand-accent"></span>
+      <span class="brand-text">Crypto Portfolio</span>
+    </div>
+
+    <span class="spacer"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Open account menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #accountMenu="matMenu">
+      <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button mat-menu-item type="button" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <main class="dashboard-content">
+    <section class="dashboard-actions">
+      <h1>Dashboard</h1>
+      <button mat-flat-button color="primary" routerLink="/user-assets">Manage User Assets</button>
+    </section>
+  </main>
 </div>
