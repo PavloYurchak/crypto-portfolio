@@ -147,6 +147,51 @@ namespace CryptoPorfolio.Infrastructure.Repositories
             return entity.ToModel();
         }
 
+        public async Task<User> CreateWithBootstrapRoleAsync(
+            User model,
+            string passwordHash,
+            string passwordSalt,
+            string passwordAlgo,
+            bool makeAdminIfMissing,
+            CancellationToken cancellationToken = default)
+        {
+            var requestedUserName = model.UserName;
+            var requestedUserType = model.UserType;
+            var roleUserType = makeAdminIfMissing ? "Admin" : requestedUserType;
+            var roleUserName = makeAdminIfMissing ? "Admin" : requestedUserName;
+
+            try
+            {
+                return await CreateWithRoleInternalAsync(
+                    model with
+                    {
+                        UserName = roleUserName,
+                        UserType = roleUserType,
+                    },
+                    passwordHash,
+                    passwordSalt,
+                    passwordAlgo,
+                    cancellationToken);
+            }
+            catch (DbUpdateException ex) when (
+                makeAdminIfMissing &&
+                ex.ToString().Contains("IXU_Users_UserType", StringComparison.OrdinalIgnoreCase))
+            {
+                context.ChangeTracker.Clear();
+
+                return await CreateWithRoleInternalAsync(
+                    model with
+                    {
+                        UserName = requestedUserName,
+                        UserType = "User",
+                    },
+                    passwordHash,
+                    passwordSalt,
+                    passwordAlgo,
+                    cancellationToken);
+            }
+        }
+
         public async Task<(User User, string PasswordHash, string? PasswordSalt, string? PasswordAlgo)?>
         GetWithPasswordByEmailAsync(string email, CancellationToken cancellationToken = default)
         {
@@ -213,6 +258,42 @@ namespace CryptoPorfolio.Infrastructure.Repositories
                 .AsNoTracking()
                 .AnyAsync(e => e.DeletedAt == null, cancellationToken);
             return !result;
+        }
+
+        public async Task<bool> HasActiveAdminAsync(CancellationToken cancellationToken = default)
+        {
+            return await context.Users
+                .AsNoTracking()
+                .AnyAsync(
+                    e =>
+                        e.DeletedAt == null &&
+                        e.IsActive &&
+                        e.UserType == "Admin",
+                    cancellationToken);
+        }
+
+        private async Task<User> CreateWithRoleInternalAsync(
+            User model,
+            string passwordHash,
+            string passwordSalt,
+            string passwordAlgo,
+            CancellationToken cancellationToken)
+        {
+            var entity = model.ToEntity();
+
+            entity.PasswordHash = passwordHash;
+            entity.PasswordSalt = passwordSalt;
+            entity.PasswordAlgo = passwordAlgo;
+            entity.CreatedAt = DateTime.UtcNow;
+
+            await context.Users.AddAsync(entity, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
+
+            entity = await context.Users
+                .AsNoTracking()
+                .SingleAsync(e => e.Id == entity.Id, cancellationToken);
+
+            return entity.ToModel();
         }
     }
 }

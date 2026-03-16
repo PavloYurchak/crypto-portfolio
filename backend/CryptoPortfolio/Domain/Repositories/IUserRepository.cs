@@ -31,5 +31,15 @@ namespace CryptoPorfolio.Domain.Repositories
             CancellationToken cancellationToken = default);
 
         Task<bool> IsUserEmptyAsync(CancellationToken cancellationToken = default);
+
+        Task<bool> HasActiveAdminAsync(CancellationToken cancellationToken = default);
+
+        Task<User> CreateWithBootstrapRoleAsync(
+            User model,
+            string passwordHash,
+            string passwordSalt,
+            string passwordAlgo,
+            bool makeAdminIfMissing,
+            CancellationToken cancellationToken = default);
     }
 }

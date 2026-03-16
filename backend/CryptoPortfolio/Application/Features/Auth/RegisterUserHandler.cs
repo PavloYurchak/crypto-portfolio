@@ -2,7 +2,6 @@
 using CryptoPorfolio.Application.Abstractions.Messaging;
 using CryptoPorfolio.Application.Abstractions.Security;
 using CryptoPorfolio.Application.Mapping;
-using CryptoPorfolio.Application.Models;
 using CryptoPorfolio.Application.Requests.Auth;
 using CryptoPorfolio.Application.Response;
 using CryptoPorfolio.Domain.Models;
@@ -25,8 +24,6 @@ namespace CryptoPorfolio.Application.Features.Auth
             RegisterUser request,
             CancellationToken cancellationToken)
         {
-            var isUserEmpty = await userRepository.IsUserEmptyAsync(cancellationToken);
-
             var existingUser = await userRepository.GetByEmailAsync(request.Email, cancellationToken);
             if (existingUser is not null)
             {
@@ -47,17 +44,14 @@ namespace CryptoPorfolio.Application.Features.Auth
                 IsActive = true,
             };
 
-            if (isUserEmpty)
-            {
-                userModel.UserName = "Admin";
-                userModel.UserType = UserTypes.Admin;
-            }
+            var hasActiveAdmin = await userRepository.HasActiveAdminAsync(cancellationToken);
 
-            var createdUser = await userRepository.CreateWithPasswordAsync(
+            var createdUser = await userRepository.CreateWithBootstrapRoleAsync(
                 userModel,
                 hash,
                 salt ?? throw new ArgumentException(),
                 algo ?? throw new ArgumentException(),
+                !hasActiveAdmin,
                 cancellationToken);
 
             var (accessToken, expiresAt) = jwtTokenService.GenerateAccessToken(createdUser);

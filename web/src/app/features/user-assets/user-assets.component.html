@@ -25,7 +25,11 @@
     <button mat-flat-button color="primary" type="button" (click)="retryLoad()">Retry</button>
   </mat-card>
 
-  <ng-container *ngIf="!isLoading && !loadError">
+  <ng-container *ngIf="!isLoading">
+    <mat-card appearance="outlined" class="state-card" *ngIf="loadWarning">
+      <p class="error-text">{{ loadWarning }}</p>
+    </mat-card>
+
     <section class="page-title">
       <h1>User Assets</h1>
       <p>Track your portfolio entries by pair and keep the list searchable.</p>
@@ -45,10 +49,22 @@
             <mat-form-field appearance="outline">
               <mat-label>Asset *</mat-label>
               <mat-select formControlName="assetId">
+                <mat-option>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Search asset..."
+                    [(ngModel)]="assetQuery"
+                    [ngModelOptions]="{ standalone: true }"
+                    (click)="$event.stopPropagation()"
+                    (keydown)="$event.stopPropagation()"
+                  />
+                </mat-option>
                 <mat-option [value]="0" disabled>Select asset</mat-option>
-                <mat-option *ngFor="let asset of assets" [value]="asset.id">
+                <mat-option *ngFor="let asset of filteredAssets" [value]="asset.id">
                   {{ asset.symbol }} - {{ asset.name }}
                 </mat-option>
+                <mat-option disabled *ngIf="filteredAssets.length === 0">No matches</mat-option>
               </mat-select>
               <mat-error *ngIf="form.controls.assetId.touched && form.controls.assetId.invalid">Asset is required.</mat-error>
             </mat-form-field>
@@ -56,10 +72,22 @@
             <mat-form-field appearance="outline">
               <mat-label>Currency *</mat-label>
               <mat-select formControlName="currencyId">
+                <mat-option>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Search currency..."
+                    [(ngModel)]="currencyQuery"
+                    [ngModelOptions]="{ standalone: true }"
+                    (click)="$event.stopPropagation()"
+                    (keydown)="$event.stopPropagation()"
+                  />
+                </mat-option>
                 <mat-option [value]="0" disabled>Select currency</mat-option>
-                <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                <mat-option *ngFor="let currency of filteredCurrencies" [value]="currency.id">
                   {{ currency.symbol }} - {{ currency.name }}
                 </mat-option>
+                <mat-option disabled *ngIf="filteredCurrencies.length === 0">No matches</mat-option>
               </mat-select>
               <mat-error *ngIf="form.controls.currencyId.touched && form.controls.currencyId.invalid">
                 Currency is required.
@@ -92,7 +120,25 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Executed At (optional)</mat-label>
-              <input matInput type="datetime-local" formControlName="executedAt" />
+              <input matInput [matDatepicker]="executedAtPicker" formControlName="executedAt" placeholder="Pick date" />
+              <mat-datepicker-toggle matIconSuffix [for]="executedAtPicker"></mat-datepicker-toggle>
+              <mat-datepicker #executedAtPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Hour (optional)</mat-label>
+              <mat-select formControlName="executedAtHour">
+                <mat-option [value]="''">--</mat-option>
+                <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Minute (optional)</mat-label>
+              <mat-select formControlName="executedAtMinute">
+                <mat-option [value]="''">--</mat-option>
+                <mat-option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
@@ -131,6 +177,7 @@
                 <th>Asset</th>
                 <th>Currency</th>
                 <th>Quantity</th>
+                <th>Price</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -142,6 +189,7 @@
                 </td>
                 <td>{{ item.currencySymbol }}</td>
                 <td>{{ item.quantity | number: '1.2-8' }}</td>
+                <td>{{ item.price == null ? '—' : (item.price | number: '1.2-8') }}</td>
                 <td class="row-actions">
                   <button mat-stroked-button type="button" (click)="edit(item)">Edit</button>
                   <button

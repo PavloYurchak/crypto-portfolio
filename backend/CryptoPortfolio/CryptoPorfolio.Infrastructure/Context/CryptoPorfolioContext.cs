@@ -79,7 +79,7 @@ public partial class CryptoPorfolioContext : DbContext
 
             entity.HasIndex(e => e.UserType, "IXU_Users_UserType")
                 .IsUnique()
-                .HasFilter("[UserType] = 'Admin' AND [DeletedAt] IS NULL");
+                .HasFilter("[UserType] = 'Admin' AND [DeletedAt] IS NULL AND [IsActive] = 1");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
             entity.Property(e => e.Email).HasMaxLength(256);

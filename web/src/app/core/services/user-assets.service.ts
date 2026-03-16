@@ -5,13 +5,14 @@ import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../models/auth.models';
 import { AssetReference, CurrencyReference } from '../models/reference.models';
-import { UpsertUserAssetRequest, UserAsset } from '../models/user-asset.models';
+import { UpsertUserAssetRequest, UserAsset, UserAssetTransaction } from '../models/user-asset.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAssetsService {
   private readonly userAssetsApiUrl = `${environment.apiBaseUrl}/UserAssets`;
+  private readonly userAssetTransactionsApiUrl = `${environment.apiBaseUrl}/UserAssetTransactions`;
   private readonly assetsApiUrl = `${environment.apiBaseUrl}/Assets`;
   private readonly currenciesApiUrl = `${environment.apiBaseUrl}/Currencies`;
 
@@ -71,17 +72,33 @@ export class UserAssetsService {
       );
   }
 
+  getUserAssetTransactions(assetId: number, currencyId: number): Observable<UserAssetTransaction[]> {
+    return this.http
+      .get<unknown>(`${this.userAssetTransactionsApiUrl}/user-asset-transactions?assetId=${assetId}&currencyId=${currencyId}`)
+      .pipe(
+        map((payload) => {
+          const result = this.unwrap<unknown>(payload, 'Unable to load user asset transactions');
+          const rows = this.toRows(result);
+          return rows.map((row) => this.mapUserAssetTransaction(row));
+        })
+      );
+  }
+
   private unwrap<T>(payload: unknown, fallbackError: string): T {
     if (!this.isApiResponse(payload)) {
       return payload as T;
     }
 
-    const response = payload as ApiResponse<T>;
-    if (!response.success || response.result == null) {
-      throw new Error(response.error || fallbackError);
+    const response = payload as unknown as Record<string, unknown>;
+    const success = this.toBoolean(response['success'] ?? response['Success']);
+    const result = response['result'] ?? response['Result'];
+    const error = this.toString(response['error'] ?? response['Error']);
+
+    if (!success || result == null) {
+      throw new Error(error || fallbackError);
     }
 
-    return response.result;
+    return result as T;
   }
 
   private isApiResponse(payload: unknown): payload is ApiResponse<unknown> {
@@ -89,7 +106,8 @@ export class UserAssetsService {
       return false;
     }
 
-    return typeof (payload as Record<string, unknown>)['success'] === 'boolean';
+    const obj = payload as Record<string, unknown>;
+    return typeof (obj['success'] ?? obj['Success']) === 'boolean';
   }
 
   private toRows(value: unknown): unknown[] {
@@ -111,7 +129,14 @@ export class UserAssetsService {
 
     if (typeof value === 'object') {
       const obj = value as Record<string, unknown>;
-      const nested = obj['$values'] ?? obj['items'] ?? obj['Items'] ?? obj['data'] ?? obj['Data'];
+      const nested =
+        obj['$values'] ??
+        obj['items'] ??
+        obj['Items'] ??
+        obj['data'] ??
+        obj['Data'] ??
+        obj['result'] ??
+        obj['Result'];
 
       if (Array.isArray(nested)) {
         return nested;
@@ -138,7 +163,22 @@ export class UserAssetsService {
       assetSymbol: this.toString(item['assetSymbol'] ?? item['AssetSymbol']),
       assetName: this.toString(item['assetName'] ?? item['AssetName']),
       currencySymbol: this.toString(item['currencySymbol'] ?? item['CurrencySymbol']),
-      quantity: this.toNumber(item['quantity'] ?? item['Quantity'])
+      quantity: this.toNumber(item['quantity'] ?? item['Quantity']),
+      price: this.toNullableNumber(item['price'] ?? item['Price']),
+      executedAt: this.toNullableString(item['executedAt'] ?? item['ExecutedAt'])
+    };
+  }
+
+  private mapUserAssetTransaction(raw: unknown): UserAssetTransaction {
+    const item = (raw ?? {}) as Record<string, unknown>;
+
+    return {
+      id: this.toNumber(item['id'] ?? item['Id']),
+      assetId: this.toNumber(item['assetId'] ?? item['AssetId']),
+      currencyId: this.toNumber(item['currencyId'] ?? item['CurrencyId']),
+      quantity: this.toNumber(item['quantity'] ?? item['Quantity']),
+      price: this.toNumber(item['price'] ?? item['Price']),
+      executedAt: this.toNullableString(item['executedAt'] ?? item['ExecutedAt'])
     };
   }
 
@@ -175,7 +215,36 @@ export class UserAssetsService {
     return 0;
   }
 
+  private toNullableNumber(value: unknown): number | null {
+    if (value == null) {
+      return null;
+    }
+
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value : null;
+    }
+
+    if (typeof value === 'string') {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+
+    return null;
+  }
+
   private toString(value: unknown): string {
     return typeof value === 'string' ? value : '';
+  }
+
+  private toNullableString(value: unknown): string | null {
+    if (typeof value !== 'string') {
+      return null;
+    }
+
+    return value.trim() ? value : null;
+  }
+
+  private toBoolean(value: unknown): boolean {
+    return typeof value === 'boolean' ? value : false;
   }
 }

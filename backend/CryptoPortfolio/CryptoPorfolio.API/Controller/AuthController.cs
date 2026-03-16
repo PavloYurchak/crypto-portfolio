@@ -27,5 +27,11 @@ namespace CryptoPorfolio.API.Controller
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Refresh([FromBody] RefreshUserToken request, CancellationToken cancellationToken)
             => await HandleRequest(request, cancellationToken);
+
+        [HttpGet("bootstrap-status")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> BootstrapStatus(CancellationToken cancellationToken)
+            => await HandleRequest(new GetAuthBootstrapStatus(), cancellationToken);
     }
 }

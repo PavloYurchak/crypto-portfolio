@@ -43,4 +43,4 @@ WHERE [DeletedAt] IS NULL;
 GO
 CREATE UNIQUE INDEX [IXU_Users_UserType]
 ON [dbo].[Users] ([UserType]) 
-WHERE [UserType] = 'Admin' AND [DeletedAt] IS NULL;
+WHERE [UserType] = 'Admin' AND [DeletedAt] IS NULL AND [IsActive] = 1;
