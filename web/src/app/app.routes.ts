@@ -5,6 +5,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { UserAssetsComponent } from './features/user-assets/user-assets.component';
+import { AppShellComponent } from './layout/app-shell/app-shell.component';
 
 export const routes: Routes = [
   {
@@ -17,19 +18,23 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'dashboard',
+    path: '',
     canActivate: [authGuard],
-    component: DashboardComponent
-  },
-  {
-    path: 'profile',
-    canActivate: [authGuard],
-    component: ProfileComponent
-  },
-  {
-    path: 'user-assets',
-    canActivate: [authGuard],
-    component: UserAssetsComponent
+    component: AppShellComponent,
+    children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'user-assets',
+        component: UserAssetsComponent
+      }
+    ]
   },
   {
     path: '**',

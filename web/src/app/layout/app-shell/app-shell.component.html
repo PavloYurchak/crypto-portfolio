@@ -1,0 +1,47 @@
+<div class="app-shell">
+  <mat-toolbar class="app-toolbar">
+    <a class="brand-wrap" routerLink="/dashboard" aria-label="Go to dashboard">
+      <span class="brand-accent"></span>
+      <span class="brand-copy">
+        <span class="brand-text">Crypto Portfolio</span>
+        <span class="brand-subtitle">Track, review, improve</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a
+        mat-button
+        routerLink="/dashboard"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Dashboard
+      </a>
+      <a mat-button routerLink="/user-assets" routerLinkActive="is-active">Assets</a>
+      <a mat-button routerLink="/profile" routerLinkActive="is-active">Profile</a>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Open account menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #accountMenu="matMenu">
+      <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        <span>{{ userName || 'Profile' }}</span>
+      </button>
+      <button mat-menu-item type="button" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <main class="shell-main">
+    <div class="page-container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

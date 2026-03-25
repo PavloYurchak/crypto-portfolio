@@ -1,32 +1,29 @@
-<div class="dashboard-page">
-  <mat-toolbar class="top-nav">
-    <div class="brand-wrap">
-      <span class="brand-accent"></span>
-      <span class="brand-text">Crypto Portfolio</span>
-    </div>
-
-    <span class="spacer"></span>
-
-    <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Open account menu">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-
-    <mat-menu #accountMenu="matMenu">
-      <button mat-menu-item routerLink="/profile">
-        <mat-icon>person</mat-icon>
-        <span>Profile</span>
-      </button>
-      <button mat-menu-item type="button" (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        <span>Logout</span>
-      </button>
-    </mat-menu>
-  </mat-toolbar>
-
-  <main class="dashboard-content">
-    <section class="dashboard-actions">
-      <h1>Dashboard</h1>
+<div class="page-shell">
+  <section class="page-header hero-card surface-card">
+    <p class="eyebrow">Portfolio workspace</p>
+    <h1>Dashboard</h1>
+    <p class="supporting-text">
+      Keep the same visual language across the app and use this page as the main entry point into portfolio actions.
+    </p>
+    <div class="hero-actions">
       <button mat-flat-button color="primary" routerLink="/user-assets">Manage User Assets</button>
-    </section>
-  </main>
+      <button mat-stroked-button type="button" routerLink="/profile">Open Profile</button>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+    <mat-card appearance="outlined" class="surface-card info-card">
+      <h2>Design Direction</h2>
+      <p class="supporting-text">
+        Shared background, surface cards, spacing and typography now come from the global theme instead of per-page styles.
+      </p>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="surface-card info-card">
+      <h2>Next Learning Step</h2>
+      <p class="supporting-text">
+        Inspect one feature page and compare which styles are local to the feature and which now come from the shell and global tokens.
+      </p>
+    </mat-card>
+  </section>
 </div>

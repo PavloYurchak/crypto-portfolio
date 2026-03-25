@@ -4,14 +4,13 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
 
 import { UserProfile } from '../../core/models/user.models';
 import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, RouterLink],
+  imports: [CommonModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })

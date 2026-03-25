@@ -3,12 +3,16 @@
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: radial-gradient(circle at top, #eff6ff 0%, #e2e8f0 55%, #dbeafe 100%);
+  background: var(--app-page-background);
 }
 
 .login-card {
   width: min(100%, 420px);
   padding: 1rem;
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow);
 }
 
 h1 {
@@ -17,7 +21,7 @@ h1 {
 
 .subtitle {
   margin: 0.5rem 0 1.25rem;
-  color: #475569;
+  color: var(--app-text-muted);
 }
 
 form {
@@ -38,5 +42,5 @@ mat-form-field {
 
 .error {
   margin-top: 0.75rem;
-  color: #b91c1c;
+  color: var(--app-danger);
 }

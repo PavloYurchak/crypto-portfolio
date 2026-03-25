@@ -1,22 +1,23 @@
-<div class="profile-page">
-  <div class="profile-header">
-    <button mat-stroked-button type="button" routerLink="/dashboard">Back to dashboard</button>
-  </div>
+<div class="page-shell">
+  <section class="page-header">
+    <h1>Profile</h1>
+    <p class="supporting-text">Your account details are shown inside the same shared shell and card system as the rest of the app.</p>
+  </section>
 
-  <mat-card appearance="outlined" class="profile-card" *ngIf="isLoading">
+  <mat-card appearance="outlined" class="profile-card surface-card state-card" *ngIf="isLoading">
     <div class="loading-wrap">
       <mat-progress-spinner mode="indeterminate" diameter="28"></mat-progress-spinner>
       <p>Loading profile...</p>
     </div>
   </mat-card>
 
-  <mat-card appearance="outlined" class="profile-card" *ngIf="!isLoading && error">
+  <mat-card appearance="outlined" class="profile-card surface-card state-card" *ngIf="!isLoading && error">
     <h1>Profile</h1>
     <p class="error-text">{{ error }}</p>
     <button mat-flat-button color="primary" type="button" (click)="reload()">Retry</button>
   </mat-card>
 
-  <mat-card appearance="outlined" class="profile-card" *ngIf="!isLoading && profile">
+  <mat-card appearance="outlined" class="profile-card surface-card" *ngIf="!isLoading && profile">
     <h1>Profile</h1>
 
     <div class="profile-grid">

@@ -1,20 +1,6 @@
-.profile-page {
-  min-height: 100vh;
-  padding: 1.5rem;
-  background: #f8fafc;
-  display: grid;
-  gap: 1rem;
-  align-content: start;
-  justify-items: center;
-}
-
 .profile-card {
-  width: min(100%, 640px);
+  width: min(100%, 820px);
   padding: 1rem;
-}
-
-.profile-header {
-  width: min(100%, 640px);
 }
 
 h1 {
@@ -29,7 +15,6 @@ h1 {
 
 .error-text {
   margin: 0 0 1rem;
-  color: #b91c1c;
 }
 
 .profile-grid {
@@ -40,15 +25,15 @@ h1 {
 
 .field {
   padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.75rem;
-  background: #ffffff;
+  border-radius: var(--app-radius-md);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--app-border);
 }
 
 .label {
   display: block;
   font-size: 0.8rem;
-  color: #64748b;
+  color: var(--app-text-muted);
 }
 
 .value {

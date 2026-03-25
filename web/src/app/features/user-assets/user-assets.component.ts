@@ -10,7 +10,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { catchError, of, take, timeout } from 'rxjs';
 
@@ -74,7 +73,6 @@ class DotDateAdapter extends NativeDateAdapter {
     MatInputModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatToolbarModule,
     RouterLink
   ],
   providers: [

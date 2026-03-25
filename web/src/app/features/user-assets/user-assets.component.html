@@ -1,42 +1,34 @@
-<div class="user-assets-page">
-  <mat-toolbar class="top-nav">
-    <div class="brand-wrap">
-      <span class="brand-accent"></span>
-      <span class="brand-text">Crypto Portfolio</span>
+<div class="page-shell">
+  <section class="page-header assets-header">
+    <div>
+      <h1>User Assets</h1>
+      <p class="supporting-text">Track your portfolio entries by pair and keep the list searchable.</p>
     </div>
-
-    <span class="spacer"></span>
-
     <div class="head-actions">
       <button mat-stroked-button type="button" routerLink="/dashboard">Back to dashboard</button>
       <button mat-button type="button" (click)="refreshList()">Refresh</button>
     </div>
-  </mat-toolbar>
+  </section>
 
-  <mat-card appearance="outlined" class="state-card" *ngIf="isLoading">
+  <mat-card appearance="outlined" class="surface-card state-card" *ngIf="isLoading">
     <div class="loading-wrap">
       <mat-progress-spinner mode="indeterminate" diameter="28"></mat-progress-spinner>
       <p>Loading data...</p>
     </div>
   </mat-card>
 
-  <mat-card appearance="outlined" class="state-card" *ngIf="!isLoading && loadError">
+  <mat-card appearance="outlined" class="surface-card state-card" *ngIf="!isLoading && loadError">
     <p class="error-text">{{ loadError }}</p>
     <button mat-flat-button color="primary" type="button" (click)="retryLoad()">Retry</button>
   </mat-card>
 
   <ng-container *ngIf="!isLoading">
-    <mat-card appearance="outlined" class="state-card" *ngIf="loadWarning">
+    <mat-card appearance="outlined" class="surface-card state-card" *ngIf="loadWarning">
       <p class="error-text">{{ loadWarning }}</p>
     </mat-card>
 
-    <section class="page-title">
-      <h1>User Assets</h1>
-      <p>Track your portfolio entries by pair and keep the list searchable.</p>
-    </section>
-
     <div class="content-grid">
-      <mat-card appearance="outlined" class="editor-card">
+      <mat-card appearance="outlined" class="editor-card surface-card">
         <div class="card-head">
           <h2>{{ isEditing ? 'Edit User Asset' : 'Add User Asset' }}</h2>
           <p class="form-note">
@@ -155,7 +147,7 @@
         <p class="success-text" *ngIf="successMessage">{{ successMessage }}</p>
       </mat-card>
 
-      <mat-card appearance="outlined" class="table-card">
+      <mat-card appearance="outlined" class="table-card surface-card">
         <div class="card-head">
           <h2>Current Assets</h2>
           <div class="summary">
