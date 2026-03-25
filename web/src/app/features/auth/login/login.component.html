@@ -34,6 +34,7 @@
 
       <div class="submit-row">
         <button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting">Sign in</button>
+        <button mat-stroked-button type="button" routerLink="/register">Register</button>
         <mat-progress-spinner *ngIf="isSubmitting" mode="indeterminate" diameter="20"></mat-progress-spinner>
       </div>
     </form>

@@ -1,0 +1,25 @@
+.register-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--app-page-background);
+}
+
+.register-card {
+  width: min(100%, 420px);
+  padding: 1rem;
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow);
+}
+
+h1 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.75rem 0 1.5rem;
+  color: var(--app-text-muted);
+}
